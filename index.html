@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>智能作业拍照批改与学情诊断系统</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: KaiTi, "楷体", STKaiti, serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #333;
+  }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    padding: 40px 30px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+  }
+  .card h1 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: #2c3e50;
+  }
+  .card .subtitle {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 25px;
+  }
+  #qrcode {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  #qrcode img, #qrcode canvas {
+    border: 2px solid #eee;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+  }
+  .url-box {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 15px 0;
+    word-break: break-all;
+    font-size: 12px;
+    color: #666;
+  }
+  .btn {
+    display: inline-block;
+    background: #667eea;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 36px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-family: KaiTi, "楷体", serif;
+    margin-top: 10px;
+    transition: background 0.3s;
+  }
+  .btn:hover { background: #5568d3; }
+  .tip {
+    font-size: 13px;
+    color: #999;
+    margin-top: 15px;
+    line-height: 1.6;
+  }
+  .download-btn {
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-family: KaiTi, "楷体", serif;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+  }
+  .download-btn:hover { background: #229954; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>智能作业拍照批改与学情诊断系统</h1>
+  <p class="subtitle">扫一扫下方二维码，即可进入系统</p>
+
+  <div id="qrcode"></div>
+
+  <div class="url-box" id="urlDisplay"></div>
+
+  <button class="download-btn" onclick="downloadQR()">保存二维码图片</button>
+  <br>
+  <a class="btn" id="open" href="https://www.sparklight.cn/embed/h5-app?entry=9-BvisXjqUr37CClGwwuGSogzKVthw" target="_blank">直接进入系统</a>
+
+  <p class="tip">
+    提示：用手机微信或浏览器「扫一扫」即可进入。<br>
+    二维码由本页面自动生成，无需联网也能显示。
+  </p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+  var targetUrl = "https://www.sparklight.cn/embed/h5-app?entry=9-BvisXjqUr37CClGwwuGSogzKVthw";
+
+  document.getElementById('urlDisplay').textContent = targetUrl;
+
+  var qrContainer = document.getElementById('qrcode');
+  var qr = new QRCode(qrContainer, {
+    text: targetUrl,
+    width: 220,
+    height: 220,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  function downloadQR() {
+    var img = document.querySelector('#qrcode img');
+    var canvas = document.querySelector('#qrcode canvas');
+
+    var source = img || canvas;
+    if (!source) {
+      alert('二维码尚未生成，请稍后再试');
+      return;
+    }
+
+    var link = document.createElement('a');
+    if (canvas) {
+      link.download = '智能作业系统二维码.png';
+      link.href = canvas.toDataURL('image/png');
+    } else if (img) {
+      link.download = '智能作业系统二维码.png';
+      link.href = img.src;
+    }
+    link.click();
+  }
+</script>
+</body>
+</html>
